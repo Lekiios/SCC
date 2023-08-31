@@ -1,4 +1,4 @@
-class Parser:
+class Lexer:
     keywords = ["int", "for", "while", "if", "else", "break", "continue", "return"]
 
     def __init__(self, path):
@@ -23,7 +23,7 @@ class Parser:
 
     def accept(self, t):
         if not self.check(t):
-            raise Exception("Parser error !")
+            raise Exception("Lexer error !")
 
     def iskeyword(self, k):
         return k in self.keywords
