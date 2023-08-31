@@ -3,7 +3,6 @@ class Parser:
         self.token = dict()
         self.last = dict()
         self.content = ""
-        self.pos = 0
 
         file = open(path, "r")
         content_tab = file.readlines()
@@ -14,12 +13,6 @@ class Parser:
 
         self.content = self.content.replace("\n", "")
 
-    def next(self):
-        last = self.token
-
-        while self.content[self.pos].isspace():
-            self.pos = self.pos + 1
-
     def check(self, t):
         if self.token["type"] == t:
             self.next()
@@ -29,3 +22,58 @@ class Parser:
     def accept(self, t):
         if not self.check(t):
             raise Exception("Parser error !")
+
+    def next(self):
+        self.last = self.token
+
+        if len(self.content) < 1:
+            self.token = {"type": "EOF"}
+            return False
+
+        while self.content[0].isspace():
+            self.content = self.content[1:]
+
+        # CONST
+        if self.content[0].isdigit():
+            self.token = {"type": "const", "value": ""}
+            while len(self.content) >= 1 and self.content[0].isdigit():
+                self.token["value"] = self.token["value"] + self.content[0]
+                self.content = self.content[1:]
+        # IDs
+        elif self.content[0].isalpha():
+            self.token = {"type": "id", "value": ""}
+            while len(self.content) >= 1 and (self.content[0].isalpha() or self.content[0].isdigit()):
+                self.token["value"] = self.token["value"] + self.content[0]
+                self.content = self.content[1:]
+
+        # +
+        elif self.content[0] == '+':
+            self.token = {"type": "+"}
+            self.content = self.content[1:]
+
+        # -
+        elif self.content[0] == '-':
+            self.token = {"type": "-"}
+            self.content = self.content[1:]
+
+        # (
+        elif self.content[0] == '(':
+            self.token = {"type": "("}
+            self.content = self.content[1:]
+
+        # )
+        elif self.content[0] == ')':
+            self.token = {"type": ")"}
+            self.content = self.content[1:]
+
+        # !
+        elif self.content[0] == "!":
+            self.token = {"type": "!"}
+            self.content = self.content[1:]
+
+        # ;
+        elif self.content[0] == ";":
+            self.token = {"type": ";"}
+            self.content = self.content[1:]
+
+        return True
