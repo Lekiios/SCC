@@ -74,6 +74,11 @@ class Parser:
             self.token = {"type": "/"}
             self.content = self.content[1:]
 
+        # %
+        elif self.content[0] == '%':
+            self.token = {"type": "%"}
+            self.content = self.content[1:]
+
         # = and ==
         elif self.content[0] == '=':
             if len(self.content) >= 2 and self.content[1] == '=':
@@ -93,10 +98,14 @@ class Parser:
             self.token = {"type": ")"}
             self.content = self.content[1:]
 
-        # !
+        # ! and !=
         elif self.content[0] == "!":
-            self.token = {"type": "!"}
-            self.content = self.content[1:]
+            if len(self.content) >= 2 and self.content[1] == "=":
+                self.token = {"type": "!="}
+                self.content = self.content[2:]
+            else:
+                self.token = {"type": "!"}
+                self.content = self.content[1:]
 
         # ;
         elif self.content[0] == ";":

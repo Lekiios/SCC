@@ -9,11 +9,13 @@ Simple C Compiler
 - Minus: {type: "-"}
 - Multiply: {type: "*"}
 - Divide: {type: "/"}
+- Modulo: {type: "%"}
 - Affectation: {type: "="}
 - Equal: {type: "=="}
+- Not: {type: "!"}
+- Not Equal: {type: "!="}
 - LParent: {type: "("}
 - RParent: {type: ")"}
-- Not: {type: "!"}
 - Semicolon: {type: ";"}
 - End Of File (EOF): {type: "EOF"}
 
