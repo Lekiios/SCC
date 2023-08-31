@@ -11,4 +11,4 @@ while parser.next():
 print(parser.token)
 
 end = time.time()
-print("\nTime elapsed: " + str(end - start) + ' s')
+print("\nTime elapsed: " + str(end - start) + 's')

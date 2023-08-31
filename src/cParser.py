@@ -1,4 +1,6 @@
 class Parser:
+    keywords = ["int", "for", "while", "if", "else", "break", "continue", "return"]
+
     def __init__(self, path):
         self.token = dict()
         self.last = dict()
@@ -23,9 +25,13 @@ class Parser:
         if not self.check(t):
             raise Exception("Parser error !")
 
+    def iskeyword(self, k):
+        return k in self.keywords
+
     def next(self):
         self.last = self.token
 
+        # EOF
         if len(self.content) < 1:
             self.token = {"type": "EOF"}
             return False
@@ -45,6 +51,8 @@ class Parser:
             while len(self.content) >= 1 and (self.content[0].isalpha() or self.content[0].isdigit()):
                 self.token["value"] = self.token["value"] + self.content[0]
                 self.content = self.content[1:]
+            if self.iskeyword(self.token["value"]):
+                self.token = {"type": self.token["value"]}
 
         # +
         elif self.content[0] == '+':
@@ -55,6 +63,25 @@ class Parser:
         elif self.content[0] == '-':
             self.token = {"type": "-"}
             self.content = self.content[1:]
+
+        # *
+        elif self.content[0] == '*':
+            self.token = {"type": "*"}
+            self.content = self.content[1:]
+
+        # /
+        elif self.content[0] == '/':
+            self.token = {"type": "/"}
+            self.content = self.content[1:]
+
+        # = and ==
+        elif self.content[0] == '=':
+            if len(self.content) >= 2 and self.content[1] == '=':
+                self.token = {"type": "=="}
+                self.content = self.content[2:]
+            else:
+                self.token = {"type": "="}
+                self.content = self.content[1:]
 
         # (
         elif self.content[0] == '(':

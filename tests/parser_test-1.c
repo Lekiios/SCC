@@ -1,1 +1,2 @@
-2 + (34 - 17) - var
+int var = 3;
+while(var == 2)
