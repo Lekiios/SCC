@@ -29,3 +29,7 @@ Simple C Compiler
 - break: {type: "break"}
 - continue: {type: "continue"}
 - return: {type: "return"}
+
+## Nodes Types Description 
+
+- 
