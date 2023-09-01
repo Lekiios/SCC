@@ -14,8 +14,20 @@ Simple C Compiler
 - Equal: {type: "=="}
 - Not: {type: "!"}
 - Not Equal: {type: "!="}
+- Inferior: {type: "<"}
+- Inferior or Equal: {type: "<="}
+- Superior: {type: ">"}
+- Superior or Equal: {type: ">="}
+- Or: {type: "||"}
+- And: {type: "&&"}
+- Reference: {type: "&"}
 - LParent: {type: "("}
 - RParent: {type: ")"}
+- LBracket: {type: "["}
+- RBracket: {type: "]"}
+- LCurly-Bracket: {type: "{"}
+- RCurly-Bracket: {type: "}"}
+- Comma: {type: ","}
 - Semicolon: {type: ";"}
 - End Of File (EOF): {type: "EOF"}
 
@@ -29,7 +41,3 @@ Simple C Compiler
 - break: {type: "break"}
 - continue: {type: "continue"}
 - return: {type: "return"}
-
-## Nodes Types Description 
-
-- 

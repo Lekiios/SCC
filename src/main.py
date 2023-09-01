@@ -1,5 +1,5 @@
 from cLexer import Lexer
-from cParser import Parser, Node
+from cParser import Parser
 from generator import gencode
 import time
 

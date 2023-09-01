@@ -23,7 +23,10 @@ class Lexer:
 
     def accept(self, t):
         if not self.check(t):
-            raise Exception("Lexer error !")
+            if t == ')':
+                raise Exception('Missing closing parenthesis !')
+            else:
+                raise Exception("Lexer error !")
 
     def iskeyword(self, k):
         return k in self.keywords
@@ -88,6 +91,47 @@ class Lexer:
                 self.token = {"type": "="}
                 self.content = self.content[1:]
 
+        # ! and !=
+        elif self.content[0] == "!":
+            if len(self.content) >= 2 and self.content[1] == "=":
+                self.token = {"type": "!="}
+                self.content = self.content[2:]
+            else:
+                self.token = {"type": "!"}
+                self.content = self.content[1:]
+
+        # < and <=
+        elif self.content[0] == "<":
+            if len(self.content) >= 2 and self.content[1] == '=':
+                self.token = {'type': '<='}
+                self.content = self.content[2:]
+            else:
+                self.token = {'type': '<'}
+                self.content = self.content[1:]
+
+        # > and >=
+        elif self.content[0] == ">":
+            if len(self.content) >= 2 and self.content[1] == '=':
+                self.token = {'type': '>='}
+                self.content = self.content[2:]
+            else:
+                self.token = {'type': '>'}
+                self.content = self.content[1:]
+
+        # ||
+        elif len(self.content) >= 2 and self.content[0:2] == '||':
+            self.token = {'type': '||'}
+            self.content = self.content[2:]
+
+        # & and &&
+        elif self.content[0] == '&':
+            if len(self.content) >= 2 and self.content[1] == '&':
+                self.token = {'type': '&&'}
+                self.content = self.content[2:]
+            else:
+                self.token = {'type': '&'}
+                self.content = self.content[1:]
+
         # (
         elif self.content[0] == '(':
             self.token = {"type": "("}
@@ -98,14 +142,30 @@ class Lexer:
             self.token = {"type": ")"}
             self.content = self.content[1:]
 
-        # ! and !=
-        elif self.content[0] == "!":
-            if len(self.content) >= 2 and self.content[1] == "=":
-                self.token = {"type": "!="}
-                self.content = self.content[2:]
-            else:
-                self.token = {"type": "!"}
-                self.content = self.content[1:]
+        # [
+        elif self.content[0] == '[':
+            self.token = {"type": "["}
+            self.content = self.content[1:]
+
+        # ]
+        elif self.content[0] == ']':
+            self.token = {"type": "]"}
+            self.content = self.content[1:]
+
+        # {
+        elif self.content[0] == '{':
+            self.token = {"type": "{"}
+            self.content = self.content[1:]
+
+        # }
+        elif self.content[0] == '}':
+            self.token = {"type": "}"}
+            self.content = self.content[1:]
+
+        # ,
+        elif self.content[0] == ",":
+            self.token = {"type": ","}
+            self.content = self.content[1:]
 
         # ;
         elif self.content[0] == ";":
