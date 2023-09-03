@@ -1,6 +1,9 @@
 # SCC
 Simple C Compiler
 
+###### Dev  Prerequisites :
+- _pytest_
+
 ## Token Types Description 
 
 - Constant: {type: "const", value: string(number)}
