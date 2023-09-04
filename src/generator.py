@@ -17,7 +17,7 @@ def gencode(node):
             gencode(node.children[0])
             gencode(node.children[1])
             print('add')
-        case'nd_sub':
+        case 'nd_sub':
             gencode(node.children[0])
             gencode(node.children[1])
             print('sub')
@@ -67,6 +67,14 @@ def gencode(node):
             print('cmpge')
 
         # TODO : affectation
+
+        case 'nd_drop':
+            gencode(node.children[0])
+            print('drop 1')
+
+        case 'nd_debug':
+            gencode(node.children[0])
+            print('dbg')
 
         case other:
             raise Exception('Generation failed!')

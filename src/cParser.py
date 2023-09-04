@@ -60,8 +60,25 @@ class Parser:
             return n
         return n
 
+    def instructions(self):
+        if self.lexer.check(';'):
+            return Node('nd_empty')
+        elif self.lexer.check('{'):
+            n = Node('nd_block')
+            while not self.lexer.check('}'):
+                n.children.append(self.instructions())
+            return n
+        elif self.lexer.check('debug'):
+            n = self.expression(0)
+            self.lexer.accept(';')
+            return Node('nd_debug', children=[n])
+        else:
+            n = self.expression(0)
+            self.lexer.accept(';')
+            return Node('nd_drop', children=[n])
+
     def parse(self):
-        return self.expression(0)
+        return self.instructions()
 
 
 class Node:

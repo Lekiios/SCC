@@ -1,5 +1,5 @@
 class Lexer:
-    keywords = ["int", "for", "while", "if", "else", "break", "continue", "return"]
+    keywords = ["int", "for", "while", "if", "else", "break", "continue", "return", "debug"]
 
     def __init__(self, path=None):
         self.token = dict()
@@ -173,4 +173,6 @@ class Lexer:
             self.token = {"type": ";"}
             self.content = self.content[1:]
 
+        else:
+            raise Exception('Lexer Error: token not defined !')
         return True

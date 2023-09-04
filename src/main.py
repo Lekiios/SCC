@@ -1,6 +1,7 @@
 from cLexer import Lexer
 from cParser import Parser
 from generator import gencode
+from symbol_table import SymbolTable
 import time
 
 start = time.time()
