@@ -66,8 +66,27 @@ def gencode(node):
             gencode(node.children[1])
             print('cmpge')
 
-        # TODO : affectation
+        case 'nd_affect':
+            gencode(node.children[1])
+            print('dup')
+            if node.children[0].type != 'nd_ref':
+                raise Exception('Need an identifier to affect value !')
+            if node.children[0].symbol['type'] == 'var_loc':
+                print('set {}'.format(node.children[0].symbol['address']))
+            else:
+                raise Exception('Do not handle other symbol than var_loc !')
 
+        case 'nd_ref':
+            if node.symbol['type'] == 'var_loc':
+                print('get {}'.format(node.symbol['address']))
+            else:
+                raise Exception('Do not handle other symbol than var_loc !')
+        case 'nd_decl':
+            pass
+
+        case 'nd_block' | 'nd_seq':
+            for child in node.children:
+                gencode(child)
         case 'nd_drop':
             gencode(node.children[0])
             print('drop 1')

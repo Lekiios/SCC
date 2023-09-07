@@ -23,8 +23,7 @@ class Parser:
         if self.lexer.check("const"):
             return Node("nd_const", value=self.lexer.last["value"])
         elif self.lexer.check("id"):
-            # TODO
-            raise Exception("Parser error !")
+            return Node('nd_ref', value=self.lexer.last['value'])
         elif self.lexer.check("("):
             n = self.expression(0)
             self.lexer.accept(")")
@@ -72,6 +71,15 @@ class Parser:
             n = self.expression(0)
             self.lexer.accept(';')
             return Node('nd_debug', children=[n])
+        elif self.lexer.check('int'):
+            n = Node('nd_seq')
+            while True:
+                self.lexer.accept('id')
+                n.children.append(Node('nd_decl', value=self.lexer.last['value']))
+                if not self.lexer.check(','):
+                    break
+            self.lexer.accept(';')
+            return n
         else:
             n = self.expression(0)
             self.lexer.accept(';')
@@ -84,5 +92,9 @@ class Parser:
 class Node:
     def __init__(self, _type, children=None, value=None):
         self.type = _type
-        self.children = children
+        if children:
+            self.children = children
+        else:
+            self.children = []
         self.value = value
+        self.symbol = dict()

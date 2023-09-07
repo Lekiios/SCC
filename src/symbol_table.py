@@ -2,11 +2,13 @@ class SymbolTable:
 
     def __init__(self):
         self.vars = [dict()]
+        self.cid = 0
 
     def declare(self, name):
         if name in self.vars[-1]:
             raise Exception('Cannot declare {}, already declared in scope'.format(name))
-        var = {'type': '', 'address': ''}
+        var = {'id': self.cid, 'type': '', 'address': ''}
+        self.cid += 1
         self.vars[-1][name] = var
         return var
 
