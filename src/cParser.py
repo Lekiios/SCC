@@ -92,6 +92,27 @@ class Parser:
             if i2 is not None:
                 n.children.append(i2)
             return n
+        elif self.lexer.check('while'):
+            self.lexer.accept('(')
+            cond = self.expression(0)
+            self.lexer.accept(')')
+            i = self.instructions()
+            loop = Node('nd_loop')
+            target = Node('nd_target')
+            nd_cond = Node('nd_cond')
+            nd_break = Node('nd_break')
+            loop.children.append(target)
+            loop.children.append(nd_cond)
+            nd_cond.children.append(cond)
+            nd_cond.children.append(i)
+            nd_cond.children.append(nd_break)
+            return loop
+        elif self.lexer.check('break'):
+            self.lexer.accept(';')
+            return Node('nd_break')
+        elif self.lexer.check('continue'):
+            self.lexer.accept(';')
+            return Node('nd_continue')
         else:
             n = self.expression(0)
             self.lexer.accept(';')
