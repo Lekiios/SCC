@@ -1,6 +1,6 @@
 from cLexer import Lexer
 from cParser import Parser
-from generator import gencode
+from generator import Generator
 from sem_ana import SemAna
 from symbol_table import SymbolTable
 import time
@@ -12,12 +12,15 @@ lexer = Lexer("../tests/test.c")
 lexer.next()
 parser = Parser(lexer)
 sem_analyzer = SemAna()
+generator = Generator()
+
+print('.start')
 
 while lexer.token["type"] != "EOF":
     p = parser.parse()
     sem_analyzer.analyse(p)
     print('resn {}'.format(sem_analyzer.nb_var))
-    gencode(p)
+    generator.gencode(p)
     print('drop {}'.format(sem_analyzer.nb_var))
 
 print('halt')

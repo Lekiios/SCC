@@ -80,6 +80,18 @@ class Parser:
                     break
             self.lexer.accept(';')
             return n
+        elif self.lexer.check('if'):
+            self.lexer.accept('(')
+            cond = self.expression(0)
+            self.lexer.accept(')')
+            i1 = self.instructions()
+            i2 = None
+            if self.lexer.check('else'):
+                i2 = self.instructions()
+            n = Node('nd_cond', children=[cond, i1])
+            if i2 is not None:
+                n.children.append(i2)
+            return n
         else:
             n = self.expression(0)
             self.lexer.accept(';')
