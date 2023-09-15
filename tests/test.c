@@ -1,12 +1,14 @@
-int add(int a, int b){
-    return a+b;
+int add(int a){
+    if(a >= 10){
+        return a+1;
+    }
+    return add(a+2);
 }
 
 int main(){
-    int a, b, res;
-    a = 3;
-    b = 2;
-    res = add(a, b);
-    debug res;
+    int a;
+    a = 0;
+    a = add(a);
+    debug a;
     return 0;
 }
