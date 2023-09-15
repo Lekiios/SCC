@@ -22,6 +22,16 @@ class SemAna:
             case 'nd_ref':
                 s = self.symbol_table.find(node.value)
                 node.symbol = s
+            case 'nd_func':
+                self.nb_var = 0
+                self.symbol_table.begin()
+                for child in node.children:
+                    self.analyse(child)
+                self.symbol_table.end()
+                s = self.symbol_table.declare(node.value)
+                s['type'] = 'symb_func'
+                s['nb_var'] = self.nb_var - (len(node.children) - 1)
+                node.symbol = s
             case other:
                 for child in node.children:
                     self.analyse(child)

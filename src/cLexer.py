@@ -26,6 +26,8 @@ class Lexer:
         if not self.check(t):
             if t == ')':
                 raise Exception('Missing closing parenthesis !')
+            elif t == ';':
+                raise Exception('Missing semi-colon !')
             else:
                 raise Exception("Lexer error !")
 
@@ -52,7 +54,8 @@ class Lexer:
         # IDs
         elif self.content[0].isalpha():
             self.token = {"type": "id", "value": ""}
-            while len(self.content) >= 1 and (self.content[0].isalpha() or self.content[0].isdigit()):
+            while len(self.content) >= 1 and (
+                    self.content[0].isalpha() or self.content[0].isdigit() or self.content[0] == '_'):
                 self.token["value"] = self.token["value"] + self.content[0]
                 self.content = self.content[1:]
             if self.iskeyword(self.token["value"]):

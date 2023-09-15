@@ -141,6 +141,24 @@ class Generator:
                 print('.l{}'.format(self.lbl_break))
                 self.lbl_continue = save_continue
                 self.lbl_break = save_break
+            case 'nd_func':
+                print('.{}'.format(node.value))
+                print('resn {}'.format(node.symbol['nb_var']))
+                self.gencode(node.children[-1])
+                print('push 0')
+                print('ret')
+            case 'nd_call':
+                if node.children[0].type != 'nd_ref':
+                    raise Exception('generator Error while calling function')
+                if node.children[0].symbol['type'] != 'symb_func':
+                    raise Exception('Cannot call anything else than a function !')
+                print('prep {}'.format(node.children[0].value))
+                for child in node.children[1:]:
+                    self.gencode(child)
+                print('call {}'.format(len(node.children)-1))
+            case 'nd_ret':
+                self.gencode(node.children[0])
+                print('ret')
             case 'nd_debug':
                 self.gencode(node.children[0])
                 print('dbg')

@@ -14,15 +14,15 @@ parser = Parser(lexer)
 sem_analyzer = SemAna()
 generator = Generator()
 
-print('.start')
 
 while lexer.token["type"] != "EOF":
     p = parser.parse()
     sem_analyzer.analyse(p)
-    print('resn {}'.format(sem_analyzer.nb_var))
     generator.gencode(p)
-    print('drop {}'.format(sem_analyzer.nb_var))
 
+print('.start')
+print('prep main')
+print('call 0')
 print('halt')
 
 end = time.time()

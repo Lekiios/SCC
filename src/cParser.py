@@ -42,7 +42,7 @@ class Parser:
             n = self.prefix()
             return Node("nd_u_add", children=[n])
         else:
-            n = self.atom()
+            n = self.suffix()
             return n
 
     def expression(self, prio_min):
@@ -71,6 +71,10 @@ class Parser:
             n = self.expression(0)
             self.lexer.accept(';')
             return Node('nd_debug', children=[n])
+        elif self.lexer.check('return'):
+            n = self.expression(0)
+            self.lexer.accept(';')
+            return Node('nd_ret', children=[n])
         elif self.lexer.check('int'):
             n = Node('nd_seq')
             while True:
@@ -118,8 +122,34 @@ class Parser:
             self.lexer.accept(';')
             return Node('nd_drop', children=[n])
 
+    def suffix(self):
+        n = self.atom()
+        if self.lexer.check('('):
+            n = Node('nd_call', children=[n])
+            while not self.lexer.check(')'):
+                n.children.append(self.expression(0))
+                if self.lexer.check(')'):
+                    break
+                self.lexer.accept(',')
+        return n
+
+    def function(self):
+        self.lexer.accept('int')
+        self.lexer.accept('id')
+        n = Node('nd_func', value=self.lexer.last['value'])
+        self.lexer.accept('(')
+        while self.lexer.check('int'):
+            self.lexer.accept('id')
+            n.children.append(Node('nd_decl', value=self.lexer.last['value']))
+            if self.lexer.check(','):
+                continue
+            break
+        self.lexer.accept(')')
+        n.children.append(self.instructions())
+        return n
+
     def parse(self):
-        return self.instructions()
+        return self.function()
 
 
 class Node:
