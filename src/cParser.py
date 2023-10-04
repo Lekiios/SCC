@@ -41,6 +41,12 @@ class Parser:
         elif self.lexer.check("+"):
             n = self.prefix()
             return Node("nd_u_add", children=[n])
+        elif self.lexer.check('*'):
+            n = self.prefix()
+            return Node('nd_ind', children=[n])
+        elif self.lexer.check('&'):
+            n = self.prefix()
+            return Node('nd_adr', children=[n])
         else:
             n = self.suffix()
             return n

@@ -16,6 +16,7 @@ class Generator:
                 self.gencode(node.children[0])
                 print("add")
             case "nd_u_sub":
+                print('push 0')
                 self.gencode(node.children[0])
                 print("sub")
 
@@ -76,12 +77,13 @@ class Generator:
             case 'nd_affect':
                 self.gencode(node.children[1])
                 print('dup')
-                if node.children[0].type != 'nd_ref':
-                    raise Exception('Need an identifier to affect value !')
-                if node.children[0].symbol['type'] == 'var_loc':
+                if node.children[0].type == 'nd_ref' and node.children[0].symbol['type'] == 'var_loc':
                     print('set {}'.format(node.children[0].symbol['address']))
+                elif node.children[0].type == 'nd_ind':
+                    self.gencode(node.children[0].children[0])
+                    print('write')
                 else:
-                    raise Exception('Do not handle other symbol than var_loc !')
+                    raise Exception('Affectation Error !')
 
             case 'nd_ref':
                 if node.symbol['type'] == 'var_loc':
@@ -155,10 +157,24 @@ class Generator:
                 print('prep {}'.format(node.children[0].value))
                 for child in node.children[1:]:
                     self.gencode(child)
-                print('call {}'.format(len(node.children)-1))
+                print('call {}'.format(len(node.children) - 1))
             case 'nd_ret':
                 self.gencode(node.children[0])
                 print('ret')
+
+            case 'nd_ind':
+                self.gencode(node.children[0])
+                print('read')
+            case 'nd_adr':
+                if node.children[0].type != 'nd_ref':
+                    raise Exception('Need an identifier to access memory address !')
+                else:
+                    print('prep start')
+                    print('swap')
+                    print('drop 1')
+                    print('push {}'.format(node.children[0].symbol['address']+1))
+                    print('sub')
+
             case 'nd_debug':
                 self.gencode(node.children[0])
                 print('dbg')

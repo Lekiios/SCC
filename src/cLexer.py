@@ -1,5 +1,5 @@
 class Lexer:
-    keywords = ["int", "for", "while", "if", "else", "break", "continue", "return", "debug"]
+    keywords = ["int", "for", "while", "if", "else", "break", "continue", "return", "debug", "send"]
 
     def __init__(self, path=None):
         self.token = dict()
@@ -15,6 +15,8 @@ class Lexer:
                 self.content = self.content + string
 
             self.content = self.content.replace("\n", "")
+
+        self.next()
 
     def check(self, t):
         if self.token["type"] == t:
