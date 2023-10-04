@@ -77,6 +77,10 @@ class Parser:
             n = self.expression(0)
             self.lexer.accept(';')
             return Node('nd_debug', children=[n])
+        elif self.lexer.check('send'):
+            n = self.expression(0)
+            self.lexer.accept(';')
+            return Node('nd_send', children=[n])
         elif self.lexer.check('return'):
             n = self.expression(0)
             self.lexer.accept(';')

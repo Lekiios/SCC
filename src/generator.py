@@ -179,5 +179,9 @@ class Generator:
                 self.gencode(node.children[0])
                 print('dbg')
 
+            case 'nd_send':
+                self.gencode(node.children[0])
+                print('send')
+
             case other:
                 raise Exception('Generation failed!')

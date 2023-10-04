@@ -19,7 +19,7 @@ def compile_file(path):
 
 start = time.time()
 
-compile_file('../std/lib.c')
+#compile_file('../std/lib.c')
 compile_file('../tests/test.c')
 
 print('.start')
