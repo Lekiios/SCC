@@ -141,6 +141,11 @@ class Parser:
                 if self.lexer.check(')'):
                     break
                 self.lexer.accept(',')
+        elif self.lexer.check('['):
+            e = self.expression(0)
+            self.lexer.accept(']')
+            add = Node('nd_add', [n, e])
+            n = Node('nd_ind', [add])
         return n
 
     def function(self):

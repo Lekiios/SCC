@@ -1,6 +1,6 @@
 int main(){
-    int a;
-    a = 10;
-    printl_num(256);
+    int a, b, c;
+    b = 12;
+
     return 0;
 }
