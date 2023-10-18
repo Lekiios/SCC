@@ -16,17 +16,19 @@ def compile_files(*path):
         sem_analyzer.analyse(p)
         generator.gencode(p)
 
+    generator.write_bin('.start')
+    generator.write_bin('prep init')
+    generator.write_bin('call 0')
+    generator.write_bin('prep main')
+    generator.write_bin('call 0')
+    generator.write_bin('halt')
+
+    generator.write_file()
+
 
 start = time.time()
 
 compile_files('../std/lib.c', '../tests/test.c')
-
-print('.start')
-print('prep init')
-print('call 0')
-print('prep main')
-print('call 0')
-print('halt')
 
 end = time.time()
 print("\nTime elapsed: " + str(round((end - start) * 1000, 3)) + 'ms')
