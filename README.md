@@ -1,7 +1,8 @@
 # SCC
 Simple C Compiler
 
-###### Dev  Prerequisites :
+###### Dev Prerequisites :
+- _python 3.10_
 - _pytest_
 
 ## Token Types Description 
