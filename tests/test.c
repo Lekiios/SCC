@@ -1,8 +1,4 @@
 int main(){
-    int a, b, c;
-    c = 12;
-    b = &b;
-    b[1] = &c;
-    debug *a;
+    printl_num(10);
     return 0;
 }

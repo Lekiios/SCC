@@ -5,7 +5,7 @@ from sem_ana import SemAna
 import time
 
 
-def compile_file(path):
+def compile_files(*path):
     lexer = Lexer(path)
     parser = Parser(lexer)
     sem_analyzer = SemAna()
@@ -20,11 +20,11 @@ def compile_file(path):
 start = time.time()
 
 #compile_file('../std/lib.c')
-compile_file('../tests/test.c')
+compile_files('../std/lib.c', '../tests/test.c')
 
 print('.start')
-# print('prep init')
-# print('call 0')
+print('prep init')
+print('call 0')
 print('prep main')
 print('call 0')
 print('halt')

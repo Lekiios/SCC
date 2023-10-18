@@ -18,7 +18,8 @@ int printl_num(int n){
 int free(){}
 
 int malloc(int n){
-    int r = *0;
+    int r;
+    r = *0;
     *0 = *0+n;
     return r;
 }

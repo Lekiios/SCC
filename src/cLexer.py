@@ -1,20 +1,23 @@
 class Lexer:
     keywords = ["int", "for", "while", "if", "else", "break", "continue", "return", "debug", "send"]
 
-    def __init__(self, path=None):
+    def __init__(self, path):
         self.token = dict()
         self.last = dict()
         self.content = ""
+        print(path)
 
         if path:
-            file = open(path, "r")
-            content_tab = file.readlines()
-            file.close()
+            for p in path:
+                print(p)
+                file = open(p, "r")
+                content_tab = file.readlines()
+                file.close()
 
-            for string in content_tab:
-                self.content = self.content + string
+                for string in content_tab:
+                    self.content = self.content + string
 
-            self.content = self.content.replace("\n", "")
+                self.content = self.content.replace("\n", "")
 
         self.next()
 
