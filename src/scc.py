@@ -19,7 +19,6 @@ def compile_files(*path):
 
 start = time.time()
 
-#compile_file('../std/lib.c')
 compile_files('../std/lib.c', '../tests/test.c')
 
 print('.start')

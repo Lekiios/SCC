@@ -5,11 +5,9 @@ class Lexer:
         self.token = dict()
         self.last = dict()
         self.content = ""
-        print(path)
 
         if path:
             for p in path:
-                print(p)
                 file = open(p, "r")
                 content_tab = file.readlines()
                 file.close()
