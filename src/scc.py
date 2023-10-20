@@ -9,7 +9,7 @@ def compile_files(*path):
     lexer = Lexer(path)
     parser = Parser(lexer)
     sem_analyzer = SemAna()
-    generator = Generator()
+    generator = Generator('../tests/sim')
 
     while lexer.token["type"] != "EOF":
         p = parser.parse()
@@ -28,7 +28,7 @@ def compile_files(*path):
 
 start = time.time()
 
-compile_files('../std/lib.c', '../tests/test.c')
+compile_files('../std/lib.c', '../tests/sim/main.c')
 
 end = time.time()
 print("\nTime elapsed: " + str(round((end - start) * 1000, 3)) + 'ms')

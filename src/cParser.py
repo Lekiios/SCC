@@ -121,6 +121,33 @@ class Parser:
             nd_cond.children.append(i)
             nd_cond.children.append(nd_break)
             return loop
+        elif self.lexer.check('for'):
+            self.lexer.accept('(')
+            init = self.instructions()
+            cond_expr = self.expression(0)
+            self.lexer.accept(';')
+            mod = self.expression(0)
+            self.lexer.accept(')')
+            i = self.instructions()
+
+            drop = Node('nd_drop', children=[mod])
+            drop2 = Node('nd_drop', children=[cond_expr])
+            loop = Node("nd_loop")
+            target = Node('nd_target')
+            nd_cond = Node('nd_cond')
+            nd_break = Node('nd_break')
+            nd_seq = Node("nd_seq", children=[i, target, drop2])
+
+            nd_cond.children.append(cond_expr)
+            nd_cond.children.append(nd_seq)
+            nd_cond.children.append(nd_break)
+
+            loop.children.append(nd_cond)
+
+            init.children.append(drop)
+            init.children.append(loop)
+            return init
+
         elif self.lexer.check('break'):
             self.lexer.accept(';')
             return Node('nd_break')

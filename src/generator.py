@@ -1,16 +1,20 @@
 class Generator:
 
-    def __init__(self):
+    def __init__(self, generation_path):
         self.nb_label = 0
         self.lbl_continue = 0
         self.lbl_break = 0
         self.asm = ''
+        self.generation_path = '.'
+
+        if generation_path:
+            self.generation_path = generation_path
         
     def write_bin(self, instr):
         self.asm += instr + '\n'
 
     def write_file(self):
-        file = open("./asm.s", "w")
+        file = open(self.generation_path + "/asm.s", "w")
         file.write(self.asm)
         file.close()
 
