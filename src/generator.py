@@ -1,20 +1,27 @@
+import os
+
+default_build_path = os.path.abspath("build")
+
+
 class Generator:
 
-    def __init__(self, generation_path):
+    def __init__(self, build_path=default_build_path):
         self.nb_label = 0
         self.lbl_continue = 0
         self.lbl_break = 0
         self.asm = ''
-        self.generation_path = '.'
 
-        if generation_path:
-            self.generation_path = generation_path
-        
+        if build_path == default_build_path and not os.path.exists(default_build_path):
+            os.makedirs(default_build_path)
+            print("Create build directory.")
+
+        self.build_path = build_path
+
     def write_bin(self, instr):
         self.asm += instr + '\n'
 
     def write_file(self):
-        file = open(self.generation_path + "/asm.s", "w")
+        file = open(self.build_path + "/asm.s", "w")
         file.write(self.asm)
         file.close()
 
@@ -185,7 +192,7 @@ class Generator:
                     self.write_bin('prep start')
                     self.write_bin('swap')
                     self.write_bin('drop 1')
-                    self.write_bin('push {}'.format(node.children[0].symbol['address']+1))
+                    self.write_bin('push {}'.format(node.children[0].symbol['address'] + 1))
                     self.write_bin('sub')
 
             case 'nd_debug':
