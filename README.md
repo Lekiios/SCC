@@ -55,7 +55,13 @@ Welcome to SCC - a basic C compiler written in Python.
 
 - **Pointers**: SCC handles pointers, allowing you to work with memory addresses and data manipulation.
 
-- **Arrays**: It supports the declaration and manipulation of arrays, including multidimensional arrays.
+- **Arrays**: It supports the declaration and manipulation of arrays, including multidimensional arrays {(array[i])[j]}.
+
+- **standard library**: 
+  - **malloc(int n)**
+  - **free()**
+  - **print_num(int n)**: (without newline)
+  - **printl_num(int n)**: (with newline)
 
 ---
 
