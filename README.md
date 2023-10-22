@@ -151,7 +151,8 @@ python3 src/scc.py file1.c file2.c  ...
 ```
 
 Files has to be ordered correctly.\
-Declaration before usage.
+Declaration before usage.\
+The assembly will be produced in build/ (You can change this path in scc.py where the comment says it.)
 
 ### 🧪 Tests
 

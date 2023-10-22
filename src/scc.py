@@ -7,11 +7,13 @@ from generator import Generator
 from sem_ana import SemAna
 import time
 
+
 def compile_files(*path):
     lexer = Lexer(path)
     parser = Parser(lexer)
     sem_analyzer = SemAna()
-    generator = Generator('tests/sim')
+    generator = Generator(  # add path here to change build location
+    )
 
     while lexer.token["type"] != "EOF":
         p = parser.parse()
