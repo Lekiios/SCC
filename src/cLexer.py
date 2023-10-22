@@ -1,12 +1,12 @@
 class Lexer:
     keywords = ["int", "for", "while", "if", "else", "break", "continue", "return", "debug", "send"]
 
-    def __init__(self, path):
+    def __init__(self, path=""):
         self.token = dict()
         self.last = dict()
         self.content = ""
 
-        if path:
+        if path != "":
             for p in path:
                 file = open(p, "r")
                 content_tab = file.readlines()
@@ -44,6 +44,15 @@ class Lexer:
         if len(self.content) < 1:
             self.token = {"type": "EOF"}
             return False
+
+        while self.content[0].isspace():
+            self.content = self.content[1:]
+
+        # Comment /*...*/
+        if self.content[:2] == "/*":
+            while self.content[:2] != '*/':
+                self.content = self.content[1:]
+            self.content = self.content[2:]
 
         while self.content[0].isspace():
             self.content = self.content[1:]

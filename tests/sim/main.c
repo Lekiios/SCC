@@ -1,9 +1,7 @@
 int main(){
-    int a,b;
-    a = 5;
-    b = 0;
-    for(int i; b < a; i = i + 1 ){
-        b = b + 1;
-    }
+    int a, b, c;
+    a = 2; b = 4; c = 8;
+
+
     return 0;
 }

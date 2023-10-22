@@ -31,3 +31,24 @@ lexer.content = ""
 def test_id():
     lexer.content = '123 3 voiture'
     assert run_lexer_last(lexer) == {'type': 'id', 'value': 'voiture'}
+
+
+def test_full():
+    lexer.content = 'int main(){int a; a=2; return a;}'
+    lexer.next()
+    assert lexer.check('int')
+    assert lexer.check('id')
+    assert lexer.check('(')
+    assert lexer.check(')')
+    assert lexer.check('{')
+    assert lexer.check('int')
+    assert lexer.check('id')
+    assert lexer.check(';')
+    assert lexer.check('id')
+    assert lexer.check('=')
+    assert lexer.token['value'] == '2' and lexer.check('const')
+    assert lexer.check(';')
+    assert lexer.check('return')
+    assert lexer.check('id')
+    assert lexer.check(';')
+    assert lexer.check('}')
